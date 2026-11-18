@@ -1,0 +1,194 @@
+---
+import Base from "../layouts/Base.astro";
+import Logo from "../components/Logo.astro";
+import InstallCommand from "../components/InstallCommand.astro";
+import PanelMock from "../components/PanelMock.astro";
+
+const repo = "https://github.com/abdielwilsn/skiff";
+
+const features = [
+  { icon: "zap", title: "Push to deploy", body: "Connect GitHub once. Every push to your branch pulls, builds and goes live, with signed webhooks and a live log." },
+  { icon: "lock", title: "Free HTTPS", body: "One click for a Let's Encrypt certificate, HTTP→HTTPS redirects and automatic renewal. For your sites and the panel itself." },
+  { icon: "php", title: "PHP 8.2 – 8.5 per site", body: "Each site picks its version. Skiff installs it the first time it's needed, with its own lean PHP-FPM pool." },
+  { icon: "node", title: "Node & Vite builds", body: "Inertia, React or Vue front ends build on deploy with the Node.js LTS you choose. No manifest errors in production." },
+  { icon: "db", title: "MySQL when you want it", body: "Create a database per site in a click; credentials land in .env before migrations run. Tuned for small servers." },
+  { icon: "terminal", title: "Live logs, plain scripts", body: "Watch every deploy stream in real time. The deploy script is a bash script you can read and edit." },
+  { icon: "key", title: "Edit .env in the browser", body: "Change environment variables from the panel. Skiff saves atomically and refreshes Laravel's config cache." },
+  { icon: "shield", title: "Secure by default", body: "Sites run as an unprivileged user, the panel needs a one-time setup token, every form has CSRF protection and logins are rate limited." },
+  { icon: "chip", title: "Built for tiny servers", body: "A single Go binary that idles around 16 MB of RAM. PHP workers spin up on demand, and small machines get swap automatically." },
+];
+
+const faqs = [
+  { q: "What does it cost?", a: "Skiff itself is free. It runs on the server you already pay for, so there's no per-server or per-site fee for the panel." },
+  { q: "What do I need?", a: "A fresh Ubuntu 22.04 or 24.04 VPS (x86 or ARM) with root access. A domain is optional to start; you need one for HTTPS." },
+  { q: "Where does my code and data go?", a: "Nowhere else. Skiff talks to GitHub through an OAuth app you own, and everything (settings, logs, databases) stays on your server." },
+  { q: "How do I update Skiff?", a: "Run the install command again. It downloads the newest release, verifies its checksum, swaps it in and keeps your sites and settings." },
+  { q: "Does it only work with Laravel?", a: "Today, yes. Skiff focuses on doing Laravel really well: Composer, Artisan, migrations, Vite builds and sensible Nginx defaults." },
+  { q: "Can I manage several servers?", a: "Each server runs its own Skiff today. Managing many servers from one central panel is on the roadmap." },
+];
+---
+<Base
+  title="Skiff: deploy Laravel to your own server"
+  description="A tiny self-hosted panel that turns any Ubuntu VPS into a push-to-deploy home for your Laravel apps. One command to install. Free HTTPS, PHP & Node versions, MySQL and live logs."
+>
+  <header class="nav">
+    <div class="wrap nav-row">
+      <a class="brand" href="/"><Logo size={26} /><span>Skiff</span></a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn btn-ghost" href={repo} target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 .2a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8 8 0 0 0 8 .2z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <a class="eyebrow" href={`${repo}/releases/latest`} target="_blank" rel="noopener"><span class="pulse-dot"></span>v0.1.0 is out · Free &amp; self-hosted<span aria-hidden="true">→</span></a>
+        <h1>Deploy Laravel to your own server.<br /><span class="dim">Without the busywork.</span></h1>
+        <p class="lead">Skiff is a tiny control panel that lives on your VPS. Connect GitHub, pick a repository, and it sets up PHP, Nginx, HTTPS, databases and builds, then redeploys every time you push.</p>
+        <InstallCommand />
+        <p class="hero-note">Run it on a fresh Ubuntu server. Run it again later to update.</p>
+      </div>
+      <div class="wrap">
+        <PanelMock />
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="wrap stats-grid">
+        <div><b>~13 MB</b><span>one static binary</span></div>
+        <div><b>~16 MB</b><span>RAM at idle</span></div>
+        <div><b>1</b><span>command to install &amp; update</span></div>
+        <div><b>$0</b><span>panel fees, ever</span></div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Features</p>
+          <h2>Everything a Laravel app needs in production.</h2>
+          <p class="sub">The parts you'd otherwise script by hand, with sensible defaults and nothing hidden.</p>
+        </div>
+        <div class="features">
+          {features.map((f) => (
+            <article class="feature">
+              <span class={`ficon ficon-${f.icon}`} aria-hidden="true"></span>
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="section section-alt">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">How it works</p>
+          <h2>From empty VPS to live app in minutes.</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <span class="step-n">1</span>
+            <h3>Install</h3>
+            <p>Paste one command on a fresh Ubuntu server. Skiff downloads, verifies itself and prints a private setup link.</p>
+            <pre class="snippet"><code><span class="c">$</span> curl -fsSL …/install.sh | sudo bash
+<span class="ok">==&gt;</span> Verifying checksum
+<span class="ok">==&gt;</span> Skiff v0.1.0 is running.</code></pre>
+          </li>
+          <li>
+            <span class="step-n">2</span>
+            <h3>Connect</h3>
+            <p>Provision the server with one click, give the panel its own HTTPS domain, and link your GitHub account.</p>
+            <pre class="snippet"><code><span class="ok">==&gt;</span> Installing Nginx and PHP 8.4
+<span class="ok">==&gt;</span> Configuring PHP-FPM
+<span class="ok">✓</span> Server is ready</code></pre>
+          </li>
+          <li>
+            <span class="step-n">3</span>
+            <h3>Ship</h3>
+            <p>Pick a repo and a domain. Skiff builds and serves it, and with push-to-deploy, every <code>git push</code> goes live.</p>
+            <pre class="snippet"><code><span class="c">Deploy app.com (push a1b2c3d)</span>
+<span class="ok">✓</span> built in 2.9s
+<span class="ok">✓</span> Live at https://app.com</code></pre>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap split">
+        <div>
+          <p class="kicker">Yours, end to end</p>
+          <h2>Your server, your code, your data.</h2>
+          <p class="sub">There's no Skiff cloud in the middle. The panel runs next to your apps, talks to GitHub through an OAuth app you own, and keeps everything in a single SQLite file on your machine.</p>
+          <ul class="checks">
+            <li>Webhooks are verified with a per-site secret</li>
+            <li>Tokens are never written into git config or deploy scripts</li>
+            <li>MySQL listens on localhost only</li>
+            <li>Downloads (Skiff, Node.js, Composer) are checksum-verified</li>
+          </ul>
+        </div>
+        <pre class="code-card"><code><span class="c"># the default deploy script, editable per site</span>
+composer install --no-dev --optimize-autoloader
+
+<span class="k">if</span> ! grep -q <span class="s">'^APP_KEY=base64:'</span> .env; <span class="k">then</span>
+    php artisan key:generate --force
+<span class="k">fi</span>
+
+<span class="k">if</span> [ -f package.json ]; <span class="k">then</span>
+    npm ci &amp;&amp; npm run build
+<span class="k">fi</span>
+
+php artisan migrate --force
+php artisan optimize</code></pre>
+      </div>
+    </section>
+
+    <section id="faq" class="section section-alt">
+      <div class="wrap narrow">
+        <div class="section-head">
+          <p class="kicker">FAQ</p>
+          <h2>Questions, answered.</h2>
+        </div>
+        <div class="faq">
+          {faqs.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap cta-inner">
+        <h2>Give your next Laravel app a home.</h2>
+        <p class="sub">One command on a fresh Ubuntu server. That's the whole setup.</p>
+        <InstallCommand />
+        <div class="cta-actions">
+          <a class="btn btn-primary" href={repo} target="_blank" rel="noopener">Star on GitHub</a>
+          <a class="btn btn-ghost" href={`${repo}#readme`} target="_blank" rel="noopener">Read the docs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <span class="brand small"><Logo size={20} /><span>Skiff</span></span>
+      <span class="muted">Self-hosted deploys for Laravel.</span>
+      <span class="spacer"></span>
+      <a href={`${repo}/releases`} target="_blank" rel="noopener">Releases</a>
+      <a href={repo} target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+</Base>
