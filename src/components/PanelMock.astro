@@ -1,9 +1,9 @@
 ---
 import Logo from "./Logo.astro";
 const sites = [
-  { d: "chicd.org", repo: "abdielwilsn/chicd", branch: "main", status: "Ready", tone: "ok", when: "2m ago", https: true, auto: true },
-  { d: "shop.example.com", repo: "acme/storefront", branch: "production", status: "Building", tone: "info", when: "now", https: true, auto: true },
-  { d: "blog.example.com", repo: "acme/blog", branch: "main", status: "Ready", tone: "ok", when: "3d ago", https: false, auto: false },
+  { d: "chicd.org", kind: "Laravel", repo: "abdielwilsn/chicd", branch: "main", status: "Ready", tone: "ok", when: "2m ago", https: true, auto: true },
+  { d: "shop.example.com", kind: "Next.js", repo: "acme/storefront", branch: "production", status: "Building", tone: "info", when: "now", https: true, auto: true },
+  { d: "docs.example.com", kind: "Static", repo: "acme/docs", branch: "main", status: "Ready", tone: "ok", when: "3d ago", https: false, auto: false },
 ];
 ---
 <div class="mock" aria-label="The Skiff panel showing three deployed sites" role="img">
@@ -22,7 +22,7 @@ const sites = [
     <div class="mock-tabs"><span class="on">Sites</span><span>Repositories</span><span>Databases</span><span>Settings</span></div>
     <div class="mock-body">
       <div class="mock-head">
-        <div><b>Sites</b><small>Laravel apps deployed on this server.</small></div>
+        <div><b>Sites</b><small>Laravel and JavaScript apps deployed on this server.</small></div>
         <span class="mock-btn">+ New site</span>
       </div>
       <div class="mock-grid">
@@ -34,6 +34,7 @@ const sites = [
             </div>
             <div class="mock-meta">
               <span><svg class="mi" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .2a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8 8 0 0 0 8 .2z"/></svg>{s.repo}</span>
+              <span>{s.kind}</span>
             </div>
             <div class="mock-meta">
               <span><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3.5-11 6"/></svg><span class="mono">{s.branch}</span></span>
