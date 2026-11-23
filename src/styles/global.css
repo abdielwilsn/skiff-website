@@ -221,6 +221,27 @@ code { font-family: var(--mono); font-size: .88em; }
 .footer-row a:hover { color: var(--fg); }
 
 /* responsive */
+/* Supported stacks */
+.stacks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.stack { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.stack-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.stack-lang { font-family: var(--mono); font-size: 12.5px; color: var(--fg-subtle); }
+.stack-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 550; color: var(--ok); padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--ok) 10%, transparent); white-space: nowrap; }
+.stack-badge i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.stack-badge.soon { color: var(--info); background: color-mix(in srgb, var(--info) 10%, transparent); }
+.stack h3, .stack-soon h3 { font-size: 20px; letter-spacing: -0.02em; margin-top: 6px; }
+.stack p, .stack-soon p { color: var(--fg-muted); font-size: 15px; line-height: 1.6; }
+.chips { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { font-size: 13.5px; padding: 5px 11px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-subtle); }
+.chips-soon { margin: 0; }
+.chips-soon li { background: transparent; border-style: dashed; color: var(--fg-muted); }
+.stack-soon { margin-top: 16px; border: 1px dashed var(--border-strong); border-radius: 16px; padding: 28px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 32px; align-items: center; }
+.stack-soon-text { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.stack-soon-list { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.link-arrow { font-size: 14.5px; font-weight: 550; border-bottom: 1px solid var(--border-strong); }
+.link-arrow:hover { border-color: var(--fg); }
+@media (max-width: 960px) { .stacks { grid-template-columns: 1fr; } .stack-soon { grid-template-columns: 1fr; gap: 20px; } }
+
 @media (max-width: 960px) {
   .features { grid-template-columns: 1fr 1fr; }
   .steps { grid-template-columns: 1fr; }
