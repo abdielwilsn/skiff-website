@@ -25,18 +25,27 @@ const stacks = [
     note: "Built on deploy and served straight from Nginx, with SPA fallback and long-lived asset caching.",
     items: ["Vite", "React", "Vue", "Svelte", "Astro", "Next.js export", "Create React App", "Plain HTML"],
   },
+  {
+    lang: "Python",
+    title: "Python apps",
+    note: "Python 3.11 – 3.14 installed with uv, a fresh virtualenv per release, gunicorn or uvicorn supervised behind Nginx. Django gets collectstatic and migrate.",
+    items: ["Django", "FastAPI", "Flask", "Starlette", "Any WSGI or ASGI app"],
+  },
 ];
 
-const comingSoon = ["Python", "Django", "FastAPI", "Ruby on Rails", "Go", "Bun", "Deno", "Docker"];
+const comingSoon = ["Ruby on Rails", "Go", "Bun", "Deno", "Elixir / Phoenix", "Docker"];
 
 const features = [
   { icon: "zap", title: "git push is your deploy button", body: "Connect GitHub once. Every push to your branch builds and goes live through a signed webhook, and you watch the log stream as it happens." },
   { icon: "rollback", title: "Atomic releases, instant rollback", body: "Each deploy builds in its own release directory and goes live with an atomic symlink swap. A broken build never touches production, and your last five releases are one click away." },
   { icon: "clock", title: "Queues and cron, handled", body: "Run up to ten queue:work processes and the scheduler as supervised systemd services. They restart on every deploy, so your workers never run stale code." },
-  { icon: "braces", title: "Node apps that stay up", body: "Next.js, Nuxt, SvelteKit or your own server, supervised by systemd. If a new release doesn't boot, the previous one comes back automatically." },
-  { icon: "node", title: "Pin your runtimes", body: "Pick PHP and Node.js versions per site; Skiff installs them on first use. npm, pnpm or yarn is chosen from your lockfile." },
+  { icon: "braces", title: "Apps that stay up", body: "Next.js, Nuxt, Django, FastAPI or your own server, supervised by systemd. If a new release doesn't boot, the previous one comes back automatically." },
+  { icon: "node", title: "Pin your runtimes", body: "Pick PHP, Node.js and Python versions per site; Skiff installs them on first use. npm, pnpm or yarn is chosen from your lockfile." },
   { icon: "lock", title: "TLS in one click", body: "Let's Encrypt certificates, HTTP→HTTPS redirects and automatic renewal, for your sites and for the panel itself." },
-  { icon: "db", title: "MySQL on tap", body: "A database and user per site in one click. The credentials land in your .env before migrations run." },
+  { icon: "envs", title: "Staging, then promote", body: "Give any site a staging environment on its own branch, domain, .env and database. When it looks right, promote the exact commit to production." },
+  { icon: "db", title: "MySQL, PostgreSQL & Redis", body: "Install each in one click. A database and user per site, wired into your .env (DB_* for Laravel, DATABASE_URL for the rest) before migrations run." },
+  { icon: "archive", title: "Backups you don't think about", body: "Every database dumped nightly and before each deploy, copied to any S3-compatible bucket, restorable in one click with a safety backup first." },
+  { icon: "activity", title: "Know when something's off", body: "CPU, memory and disk with 24-hour charts, plus the state of Nginx, your databases and every app and worker. Warnings before the disk fills up." },
   { icon: "terminal", title: "SSH is optional", body: "Run migrations, seeders or any Artisan or shell command, and edit .env, straight from the browser." },
   { icon: "list", title: "Logs where you need them", body: "Deploy output streams live; app, worker and scheduler logs are one tab away. Your deploy script is plain bash you can read and change." },
   { icon: "shield", title: "Locked down by default", body: "Apps run as an unprivileged user, setup needs a one-time token, every form has CSRF protection and logins are rate limited." },
@@ -45,19 +54,22 @@ const features = [
 ];
 
 const faqs = [
-  { q: "Which stacks can I deploy today?", a: "Laravel, and JavaScript: Next.js, Nuxt, SvelteKit, Remix, Astro and any Node server, plus static sites and SPAs built with Vite, Astro or Create React App. Pick a preset when you create a site, then adjust the build and start commands if your setup is different." },
-  { q: "What's coming next?", a: "More languages, soon: Python (Django, FastAPI), Ruby on Rails, Go, Bun, Deno and Docker images are on the list. The core (releases, rollbacks, supervised processes, health checks, Nginx) already works for any language, so new stacks mostly need a preset. Tell us what you want first on GitHub." },
+  { q: "Which stacks can I deploy today?", a: "Laravel; JavaScript (Next.js, Nuxt, SvelteKit, Remix, Astro and any Node server, plus static sites and SPAs built with Vite, Astro or Create React App); and Python (Django, FastAPI, Flask or any WSGI/ASGI app). Pick a preset when you create a site, then adjust the build and start commands if your setup is different." },
+  { q: "Which databases are supported?", a: "MySQL 8, PostgreSQL and Redis, each installed on demand and listening on localhost only, plus SQLite. Skiff creates a database and user per site and writes the connection into your .env: DB_* for Laravel, DATABASE_URL and REDIS_URL for everything else." },
+  { q: "Can I have a staging site?", a: "Yes. Add a staging (or preview) environment to any site: same repo and setup, its own branch, domain, .env and database. Test there, then promote the exact commit to production in one click; production's database is backed up first." },
+  { q: "Are my databases backed up?", a: "Nightly and before every deploy, kept on the server and optionally copied to S3, R2, B2, Spaces or any S3-compatible bucket. Restores take a safety backup first and are one click." },
+  { q: "What's coming next?", a: "Ruby on Rails, Go, Bun, Deno, Phoenix and Docker images are on the list, along with notifications and preview deployments for pull requests. The core (releases, rollbacks, supervised processes, health checks, Nginx) already works for any language, so new stacks mostly need a preset. Tell us what you want first on GitHub." },
   { q: "What does it cost?", a: "Nothing. Skiff is free and runs on the server you already pay for, so there's no per-server or per-site fee." },
   { q: "What do I need?", a: "A fresh Ubuntu 22.04 or 24.04 VPS (x86 or ARM) with root access. A domain is optional to start; you'll want one for HTTPS." },
-  { q: "What happens when a deploy fails?", a: "Production keeps running. Every deploy builds in a fresh release directory and only goes live once each step succeeded. Node apps are health-checked after the switch and rolled back automatically if they don't start." },
+  { q: "What happens when a deploy fails?", a: "Production keeps running. Every deploy builds in a fresh release directory and only goes live once each step succeeded. Node and Python apps are health-checked after the switch and rolled back automatically if they don't start." },
   { q: "Where do my code and data go?", a: "Nowhere else. Skiff talks to GitHub through an OAuth app you own, and everything (settings, logs, databases) stays on your server." },
   { q: "How do I update Skiff?", a: "Run the install command again. It downloads the latest release, verifies the checksum, swaps the binary and keeps your sites and settings." },
   { q: "Can I manage several servers?", a: "Today each server runs its own Skiff. Managing a fleet from one central panel is on the roadmap." },
 ];
 ---
 <Base
-  title="Skiff: push-to-deploy on your own server, for Laravel and JavaScript"
-  description="Skiff is a tiny self-hosted panel for developers. Install it on any Ubuntu VPS, connect GitHub, and git push your Laravel, Next.js, Nuxt, SvelteKit or Vite apps to production. More languages coming soon."
+  title="Skiff: push-to-deploy on your own server, for Laravel, JavaScript and Python"
+  description="Skiff is a tiny self-hosted panel for developers. Install it on any Ubuntu VPS, connect GitHub, and git push your Laravel, Next.js, Nuxt, Django or FastAPI apps to production, with staging, backups, PostgreSQL and Redis built in."
 >
   <header class="nav">
     <div class="wrap nav-row">
@@ -78,9 +90,9 @@ const faqs = [
   <main>
     <section class="hero">
       <div class="wrap hero-inner">
-        <a class="eyebrow" href={`${repo}/releases/latest`} target="_blank" rel="noopener"><span class="pulse-dot"></span>v0.3.0 · JavaScript apps are here<span aria-hidden="true">→</span></a>
+        <a class="eyebrow" href={`${repo}/releases/latest`} target="_blank" rel="noopener"><span class="pulse-dot"></span>v0.4.0 · Python, staging, backups, Postgres &amp; Redis<span aria-hidden="true">→</span></a>
         <h1>You push. It ships.<br /><span class="dim">On a server you own.</span></h1>
-        <p class="lead">Skiff is a tiny panel you install on your own VPS. Point it at a repo (Laravel, Next.js, Nuxt, SvelteKit, Vite or plain Node) and it handles the runtime, Nginx, TLS, workers and builds. You keep writing code.</p>
+        <p class="lead">Skiff is a tiny panel you install on your own VPS. Point it at a repo (Laravel, Next.js, Nuxt, SvelteKit, Django, FastAPI or plain Node) and it handles the runtime, Nginx, TLS, databases, workers, builds and backups. You keep writing code.</p>
         <InstallCommand />
         <p class="hero-note">Fresh Ubuntu 22.04 or 24.04, root access. Run it again any time to update.</p>
       </div>
@@ -168,7 +180,7 @@ const faqs = [
             <p>SSH in and paste one command. Skiff verifies its own checksum, starts up and prints a one-time setup link.</p>
             <pre class="snippet"><code><span class="c">$</span> curl -fsSL …/install.sh | sudo bash
 <span class="ok">==&gt;</span> Verifying checksum
-<span class="ok">==&gt;</span> Skiff v0.3.0 is running.</code></pre>
+<span class="ok">==&gt;</span> Skiff v0.4.0 is running.</code></pre>
           </li>
           <li>
             <span class="step-n">2</span>
@@ -200,7 +212,8 @@ const faqs = [
             <li>A failed deploy never touches the live release</li>
             <li>Webhooks are verified with a per-site secret</li>
             <li>Tokens never end up in git config or deploy scripts</li>
-            <li>MySQL listens on localhost only</li>
+            <li>MySQL, PostgreSQL and Redis listen on localhost only</li>
+            <li>Backups are root-only on disk; storage keys never hit a log</li>
             <li>Downloads (Skiff, Node.js, Composer) are checksum-verified</li>
           </ul>
         </div>
@@ -253,7 +266,7 @@ php artisan optimize</code></pre>
   <footer class="footer">
     <div class="wrap footer-row">
       <span class="brand small"><Logo size={20} /><span>Skiff</span></span>
-      <span class="muted">Self-hosted deploys for Laravel and JavaScript. More stacks soon.</span>
+      <span class="muted">Self-hosted deploys for Laravel, JavaScript and Python. More stacks soon.</span>
       <span class="spacer"></span>
       <a href={`${repo}/releases`} target="_blank" rel="noopener">Releases</a>
       <a href={repo} target="_blank" rel="noopener">GitHub</a>

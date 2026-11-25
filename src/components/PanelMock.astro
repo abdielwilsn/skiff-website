@@ -1,29 +1,38 @@
 ---
 import Logo from "./Logo.astro";
 const sites = [
-  { d: "chicd.org", kind: "Laravel", repo: "abdielwilsn/chicd", branch: "main", status: "Ready", tone: "ok", when: "2m ago", https: true, auto: true },
-  { d: "shop.example.com", kind: "Next.js", repo: "acme/storefront", branch: "production", status: "Building", tone: "info", when: "now", https: true, auto: true },
-  { d: "docs.example.com", kind: "Static", repo: "acme/docs", branch: "main", status: "Ready", tone: "ok", when: "3d ago", https: false, auto: false },
+  { d: "chicd.org", kind: "Laravel", repo: "abdielwilsn/chicd", branch: "main", status: "Ready", tone: "ok", when: "2m ago", https: true, auto: true, envs: ["staging"] },
+  { d: "shop.example.com", kind: "Next.js", repo: "acme/storefront", branch: "production", status: "Building", tone: "info", when: "now", https: true, auto: true, envs: ["staging", "preview"] },
+  { d: "api.example.com", kind: "Django", repo: "acme/api", branch: "main", status: "Ready", tone: "ok", when: "1h ago", https: true, auto: false, envs: [] },
 ];
+const nav = ["Sites", "Server", "Repositories", "Databases", "Backups", "Settings"];
 ---
-<div class="mock" aria-label="The Skiff panel showing three deployed sites" role="img">
+<div class="mock" aria-label="The Skiff panel: a sidebar, server stats and three deployed sites with their staging environments" role="img">
   <div class="mock-bar">
     <span class="dots"><i></i><i></i><i></i></span>
     <span class="mock-url">panel.yourdomain.com</span>
   </div>
   <div class="mock-app">
-    <div class="mock-top">
+    <aside class="mock-side" aria-hidden="true">
       <span class="mock-brand"><Logo size={18} /> Skiff</span>
-      <span class="mock-sep">/</span>
-      <span class="mock-pill"><i></i>your-vps</span>
-      <span class="mock-spacer"></span>
-      <span class="mock-avatar">A</span>
-    </div>
-    <div class="mock-tabs"><span class="on">Sites</span><span>Repositories</span><span>Databases</span><span>Settings</span></div>
+      <span class="mock-pill"><i></i>your-vps<em>Self-hosted</em></span>
+      <ul class="mock-nav">
+        {nav.map((n, i) => <li class={i === 0 ? "on" : ""}>{n}</li>)}
+      </ul>
+      <span class="mock-user"><span class="mock-avatar">A</span>admin</span>
+    </aside>
+    <div class="mock-main">
+    <div class="mock-top"><span>Sites</span></div>
     <div class="mock-body">
       <div class="mock-head">
-        <div><b>Sites</b><small>Laravel and JavaScript apps deployed on this server.</small></div>
+        <div><b>Sites</b><small>Laravel, JavaScript and Python apps on this server.</small></div>
         <span class="mock-btn">+ New site</span>
+      </div>
+      <div class="mock-strip">
+        <span><small>CPU</small><b>12%</b></span>
+        <span><small>Memory</small><b>41%</b></span>
+        <span><small>Disk</small><b>23%</b></span>
+        <span><small>Last backup</small><b>6h ago</b></span>
       </div>
       <div class="mock-grid">
         {sites.map((s) => (
@@ -41,6 +50,7 @@ const sites = [
               {s.https && <span><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>HTTPS</span>}
               {s.auto && <span><svg class="mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></svg>Auto-deploy</span>}
             </div>
+            {s.envs.length > 0 && <div class="mock-envs">{s.envs.map((e) => <span><i></i>{e}</span>)}</div>}
             <div class="mock-foot">
               <span class={`st st-${s.tone}`}><i></i>{s.status}</span>
               <small>{s.when}</small>
@@ -48,6 +58,7 @@ const sites = [
           </div>
         ))}
       </div>
+    </div>
     </div>
   </div>
 </div>
